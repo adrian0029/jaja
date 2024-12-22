@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Music Display</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #8e44ad, #1abc9c); /* Lila y verde jade */
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            margin-top: 20px;
+            color: #f3e5f5; /* Tono pastel lila */
+        }
+        .song-list {
+            margin: 20px auto;
+            width: 80%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .song {
+            margin: 15px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s, background 0.3s, color 0.3s;
+        }
+        .song:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.2);
+            color: #8e44ad; /* Lila destacado */
+        }
+        .song.selected {
+            background: #1abc9c; /* Verde jade */
+            color: #ffffff; /* Texto blanco */
+            transform: scale(1.1);
+        }
+        .display-area {
+            margin-top: 20px;
+            height: 300px;
+            position: relative;
+        }
+        .display-area img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 15px;
+            animation: fadeIn 0.8s;
+            border: 5px solid #8e44ad; /* Borde lila */
+        }
+        .display-area p {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #f3e5f5; /* Texto en lila claro */
+        }
+
+        /* Estilo del reproductor de audio */
+        .audio-player {
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Una Curita al 💔 <br> Cuando te sientas mal, ¡escucha esta música! ❤️</h1>
+    <div class="song-list">
+        <div class="song" onclick="displaySong(1)">Labios Rotos - Zoé</div>
+        <div class="song" onclick="displaySong(2)">Jackpot - Belinda/Kenia Os</div>
+        <div class="song" onclick="displaySong(3)">Día de Enero - Shakira</div>
+        <div class="song" onclick="displaySong(4)">Ride - Lana del Rey</div>
+        <div class="song" onclick="displaySong(5)">Rue Vieille Du Temple - León Larregui/Mon Laferte</div>
+    </div>
+    <div class="display-area" id="displayArea">
+        <p>Selecciona tu favorita!</p>
+    </div>
+
+    <!-- Reproductor de audio -->
+    <audio id="audioPlayer" class="audio-player" controls hidden></audio>
+
+    <script>
+        function displaySong(songNumber) {
+            const displayArea = document.getElementById('displayArea');
+            const songElements = document.querySelectorAll('.song');
+            const audioPlayer = document.getElementById('audioPlayer');
+            
+            // Datos de canciones con imágenes y archivos de audio locales
+            const data = [
+                {
+                    img: 'https://i.pinimg.com/originals/33/ba/55/33ba55f72f29836861e9a675f1689264.jpg',
+                    text: 'Labios Rotos - Zoé',
+                    audio: 'labios_rotos.mp3', // Cambia a la ruta de tu archivo de audio
+                },
+                {
+                    img: 'https://via.placeholder.com/400x300?text=Jackpot',
+                    text: 'Jackpot - Belinda/Kenia Os',
+                    audio: 'jackpot.mp3', // Cambia a la ruta de tu archivo de audio
+                },
+                {
+                    img: 'https://via.placeholder.com/400x300?text=Día+de+Enero',
+                    text: 'Día de Enero - Shakira',
+                    audio: 'dia_de_enero.mp3', // Cambia a la ruta de tu archivo de audio
+                },
+                {
+                    img: 'https://via.placeholder.com/400x300?text=Ride',
+                    text: 'Ride - Lana del Rey',
+                    audio: 'ride.mp3', // Cambia a la ruta de tu archivo de audio
+                },
+                {
+                    img: 'https://www.ixpaper.com/wp-content/uploads/2021/07/spongebob-and-patrick-best-friends-desktop-wallpaper-ixpaper.jpg',
+                    text: 'Rue Vieille Du Temple - León Larregui/Mon Laferte',
+                    audio: 'rue_vieille_du_temple.mp3', // Cambia a la ruta de tu archivo de audio
+                }
+            ];
+
+            // Quitar la clase "selected" de todas las canciones
+            songElements.forEach(song => song.classList.remove('selected'));
+
+            // Agregar la clase "selected" a la canción seleccionada
+            songElements[songNumber - 1].classList.add('selected');
+
+            const selected = data[songNumber - 1];
+            displayArea.innerHTML = ` 
+                <img src="${selected.img}" alt="Song Image">
+                <p>${selected.text}</p>
+            `;
+
+            // Reproducir el audio local
+            audioPlayer.src = selected.audio;
+            audioPlayer.hidden = false;
+            audioPlayer.play();
+        }
+    </script>
+</body>
+</html>
